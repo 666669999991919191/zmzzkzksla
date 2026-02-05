@@ -1,0 +1,162 @@
+local soundId = "rbxassetid://88457346646245"
+local Workspace = game:GetService("Workspace")
+
+-- 创建音效对象
+local sound = Instance.new("Sound")
+sound.SoundId = soundId
+sound.Looped = false
+sound.Volume = 0.5
+sound.Parent = Workspace
+
+-- 播放音效
+sound:Play()
+
+-- 音效结束后立即销毁
+sound.Ended:Connect(function()
+    sound:Destroy()
+end)
+
+task.delay(10, function()
+    if sound and sound.Parent and not sound.IsPlaying then
+        sound:Destroy()
+    end
+end)
+
+-- ========== 忍者传奇脚本修复与整合 ==========
+
+local AutoSettings = {
+    AutoSwing = false,
+    AutoSell = false,
+    AutoR = false,
+    AutoS = false,
+    AutoB = false,
+    AutoC = false,
+    AutoE = false,
+    AutoCr = false,
+    AutoTa = false,
+    AutoBo = false,
+    AutoBo1 = false,
+    AutoBo2 = false,
+    AutoCoin = false,
+    AutoChi = false
+}
+
+for k, v in pairs(AutoSettings) do
+    getgenv()[k] = v
+end
+
+-- 修复传送功能
+local function teleportTo(placeCFrame)
+    local plyr = game.Players.LocalPlayer
+    if plyr and plyr.Character and plyr.Character:FindFirstChild("HumanoidRootPart") then
+        plyr.Character.HumanoidRootPart.CFrame = placeCFrame
+    end
+end
+
+-- 修复自动功能
+local AutoFunctions = {
+    doBo = function()
+        local taskHandle
+        taskHandle = task.spawn(function()
+            while AutoBo == true do
+                local boss = game:GetService("Workspace").bossFolder:FindFirstChild("RobotBoss")
+                if boss and boss:FindFirstChild("UpperTorso") then
+                    teleportTo(boss.UpperTorso.CFrame)
+                    local args = {[1] = "swingKatana"}
+                    local event = game.Players.LocalPlayer:FindFirstChild("ninjaEvent")
+                    if event then
+                        event:FireServer(unpack(args))
+                    end
+                end
+                task.wait(0.1)
+            end
+        end)
+        return taskHandle
+    end,
+
+    doBo1 = function()
+        local taskHandle
+        taskHandle = task.spawn(function()
+            while AutoBo1 == true do
+                local boss = game:GetService("Workspace").bossFolder:FindFirstChild("EternalBoss")
+                if boss and boss:FindFirstChild("UpperTorso") then
+                    teleportTo(boss.UpperTorso.CFrame)
+                    local args = {[1] = "swingKatana"}
+                    local event = game.Players.LocalPlayer:FindFirstChild("ninjaEvent")
+                    if event then
+                        event:FireServer(unpack(args))
+                    end
+                end
+                task.wait(0.1)
+            end
+        end)
+        return taskHandle
+    end,
+
+    doBo2 = function()
+        local taskHandle
+        taskHandle = task.spawn(function()
+            while AutoBo2 == true do
+                local boss = game:GetService("Workspace").bossFolder:FindFirstChild("AncientMagmaBoss")
+                if boss and boss:FindFirstChild("UpperTorso") then
+                    teleportTo(boss.UpperTorso.CFrame)
+                    local args = {[1] = "swingKatana"}
+                    local event = game.Players.LocalPlayer:FindFirstChild("ninjaEvent")
+                    if event then
+                        event:FireServer(unpack(args))
+                    end
+                end
+                task.wait(0.1)
+            end
+        end)
+        return taskHandle
+    end,
+
+    doE = function()
+        local taskHandle
+        taskHandle = task.spawn(function()
+            while AutoE == true do
+                local elements = {
+                    "Inferno", "Frost", "Lightning", "Electral Chaos",
+                    "Shadow Charge", "Masterful Wrath", "Shadowfire",
+                    "Eternity Storm", "Blazing Entity"
+                }
+                
+                for _, element in ipairs(elements) do
+                    local args = {[1] = element}
+                    local remote = game:GetService("ReplicatedStorage"):FindFirstChild("rEvents")
+                    if remote then
+                        remote = remote:FindFirstChild("elementMasteryEvent")
+                        if remote then
+                            remote:FireServer(unpack(args))
+                        end
+                    end
+                    task.wait(0.1)
+                end
+                task.wait(0.5)
+            end
+        end)
+        return taskHandle
+    end,
+
+    doSwing = function()
+        local taskHandle
+        taskHandle = task.spawn(function()
+            while AutoSwing == true do
+                local args = {[1] = "swingKatana"}
+                local event = game.Players.LocalPlayer:FindFirstChild("ninjaEvent")
+                if event then
+                    event:FireServer(unpack(args))
+                end
+                task.wait(0.05)
+            end
+        end)
+        return taskHandle
+    end,
+
+    doS = function()
+        local taskHandle
+        taskHandle = task.spawn(function()
+            while AutoS == true do
+                local args = {[1] = "buyAllSwords", [2] = "Blazing Vortex Island"}
+               
